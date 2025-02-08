@@ -9,12 +9,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy the project file and restore dependencies
-COPY ["Ai_Inside.csproj", "./"]
+COPY ["Ai_Inside/Ai_Inside.csproj", "./"]
 RUN dotnet restore "./Ai_Inside.csproj"
 
 # Copy the rest of the application
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/Ai_Inside"
 RUN dotnet publish "./Ai_Inside.csproj" -c Release -o /app/publish
 
 # Build the runtime image
