@@ -12,7 +12,7 @@ WORKDIR /src
 COPY ["Ai_Inside.csproj", "./"]
 RUN dotnet restore "./Ai_Inside.csproj"
 
-# Copy the entire project and publish it
+# Copy the rest of the application
 COPY . .
 WORKDIR "/src"
 RUN dotnet publish "./Ai_Inside.csproj" -c Release -o /app/publish
