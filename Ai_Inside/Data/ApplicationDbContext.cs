@@ -9,5 +9,17 @@ namespace Ai_Inside.Data
             : base(options)
         {
         }
+
+            protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+    }
+
+    public async Task InitializeDatabase(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await db.Database.Migrate(); // 👈 Auto-migrate on startup
+    }
     }
 }
