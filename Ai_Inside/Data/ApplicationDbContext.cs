@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ai_Inside.Data
@@ -10,16 +10,20 @@ namespace Ai_Inside.Data
         {
         }
 
-            protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 
-    public async Task InitializeDatabase(IServiceProvider serviceProvider)
+    public static class DatabaseInitializer
     {
-        using var scope = serviceProvider.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await db.Database.Migrate(); // 👈 Auto-migrate on startup
-    }
+        public static async Task InitializeDatabaseAsync(IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            await db.Database.MigrateAsync(); // ✅ Fixed: This will auto-migrate on startup
+        }
     }
 }
