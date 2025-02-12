@@ -40,6 +40,15 @@ namespace Ai_Inside
 
 
             var app = builder.Build();
+            using (var scope = app.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    await DatabaseInitializer.InitializeDatabaseAsync(services);
+                }
+            app.Run();
+
+
+            
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
